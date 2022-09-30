@@ -1,4 +1,3 @@
-import MainClass;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -105,6 +104,12 @@ public class AddEmp extends javax.swing.JFrame {
         jLabel10.setText("Phone Number");
 
         jLabel11.setText("Email Id");
+
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -243,18 +248,33 @@ public class AddEmp extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         SearchEmp searchEmp = new SearchEmp();
-        MainClass mainClass = new MainClass();
-        Employee employee = new Employee(jTextField1.getText(), Integer.parseInt(jTextField2.getText()),Integer.parseInt(jTextField4.getText()),getSelectedButtonText(genderGroup), jDateChooser1.getDate(), Integer.parseInt(jTextField3.getText()), jTextArea2.getText(), jTextField5.getText(), jTextField7.getText(), jTextField6.getText());
-        mainClass.addEmployee(employee);
-        JOptionPane.showMessageDialog(this, "New Employee Added.");
         model = (DefaultTableModel) searchEmp.jTable1.getModel();
+        Employee employee = new Employee(jTextField1.getText(), Integer.parseInt(jTextField2.getText()),Integer.parseInt(jTextField4.getText()),getSelectedButtonText(genderGroup), jDateChooser1.getDate(), Integer.parseInt(jTextField3.getText()), jTextArea2.getText(), jTextField5.getText(), jTextField7.getText(), jTextField6.getText());
+        int j=0, flag=0;
+        while(j<MainClass.employeeList.size()) {
+            if(Integer.parseInt(jTextField2.getText()) == MainClass.employeeList.get(j).getEmployeeId()) {
+                MainClass.update(MainClass.employeeList.get(j).getEmployeeId(), employee);
+                JOptionPane.showMessageDialog(this, "Employee Details Updated.");
+                flag=1;
+            }
+            j++;
+        }
+        if(j == MainClass.employeeList.size() & flag==0) {
+            MainClass.addEmployee(employee);
+            JOptionPane.showMessageDialog(this, "New Employee Added.");
+        }
+        
         for(int i=0;i<MainClass.employeeList.size();i++){
             String data[] = {MainClass.employeeList.get(i).getName(), Integer.toString(MainClass.employeeList.get(i).getEmployeeId()), MainClass.employeeList.get(i).getPositionTitle()};
             model.addRow(data);
-       }
+        }
         this.hide();
         searchEmp.show();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -294,7 +314,7 @@ public class AddEmp extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup genderGroup;
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    public com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -306,19 +326,19 @@ public class AddEmp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    public javax.swing.JRadioButton jRadioButton1;
+    public javax.swing.JRadioButton jRadioButton2;
+    public javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    public javax.swing.JTextArea jTextArea2;
+    public javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField jTextField2;
+    public javax.swing.JTextField jTextField3;
+    public javax.swing.JTextField jTextField4;
+    public javax.swing.JTextField jTextField5;
+    public javax.swing.JTextField jTextField6;
+    public javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }
