@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.Enumeration;
+import java.util.regex.Pattern;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
@@ -262,7 +263,15 @@ public class AddEmp extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String str=  "^\\s?((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?\\s?";
+        String emailStr="\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b";
         try {
+            if (!Pattern.compile(str).matcher(jTextField7.getText()).matches()) {
+                throw TypeNotPresentException("Incorrect Details");
+            }
+            if (!Pattern.compile(emailStr).matcher(jTextField6.getText()).matches()) {
+                throw TypeNotPresentException("Incorrect Details");
+            }
             SearchEmp searchEmp = new SearchEmp();
             model = (DefaultTableModel) searchEmp.jTable1.getModel();
             Employee employee = new Employee(jTextField1.getText(), Integer.parseInt(jTextField2.getText()),Integer.parseInt(jTextField4.getText()),getSelectedButtonText(genderGroup), jDateChooser1.getDate(), Integer.parseInt(jTextField3.getText()), jTextArea2.getText(), jTextField5.getText(), jTextField7.getText(), jTextField6.getText(),filePath);
@@ -289,7 +298,6 @@ public class AddEmp extends javax.swing.JFrame {
         }
         catch(Exception e) {
             JOptionPane.showMessageDialog(this, "Insert appropriate details.");
-            this.hide();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -373,4 +381,9 @@ public class AddEmp extends javax.swing.JFrame {
     public javax.swing.JTextField jTextField6;
     public javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
+
+    private Exception TypeNotPresentException(String incorrect_Phone_Number) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
