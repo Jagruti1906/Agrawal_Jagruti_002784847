@@ -1,6 +1,11 @@
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,12 +28,12 @@ public class SearchEmp extends javax.swing.JFrame {
     public SearchEmp() {
         initComponents();
         this.setVisible(true);
-        DefaultTableModel model;
-        model = (DefaultTableModel) jTable1.getModel();
-        for(int i=0;i<MainClass.employeeList.size();i++){
-            String data[] = {MainClass.employeeList.get(i).getName(), Integer.toString(MainClass.employeeList.get(i).getEmployeeId()), MainClass.employeeList.get(i).getPositionTitle()};
-            model.addRow(data);
-        }
+//        DefaultTableModel model;
+//        model = (DefaultTableModel) jTable1.getModel();
+//        for(int i=0;i<MainClass.employeeList.size();i++){
+//            String data[] = {MainClass.employeeList.get(i).getName(), Integer.toString(MainClass.employeeList.get(i).getEmployeeId()), MainClass.employeeList.get(i).getPositionTitle()};
+//            model.addRow(data);
+//        }
     }
 
     /**
@@ -239,8 +244,8 @@ public class SearchEmp extends javax.swing.JFrame {
                     addEmp.jTextField6.setText(MainClass.employeeList.get(i).getEmail());
                 }
             }
-//            MainClass.update(id);
-//            tableModel.updateRow(jTable1.getSelectedRow());
+            this.hide();
+            addEmp.show();
         }
         else {
             if(jTable1.getSelectedRowCount() == 0) {
@@ -250,14 +255,10 @@ public class SearchEmp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Select one row at a time.");
             }
         }
-        this.hide();
-        addEmp.show();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        
-        this.hide();
         Profile profile = new Profile();
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         if(jTable1.getSelectedRowCount() == 1) {
@@ -277,12 +278,26 @@ public class SearchEmp extends javax.swing.JFrame {
                     profile.jLabel2.setText(MainClass.employeeList.get(i).getPositionTitle());
                     profile.jLabel19.setText(MainClass.employeeList.get(i).getPhoneNumber());
                     profile.jLabel21.setText(MainClass.employeeList.get(i).getEmail());
+                    try {
+                        BufferedImage picture = ImageIO.read(new File(MainClass.employeeList.get(i).getFilePath()));
+                        profile.jLabel22.setIcon(new ImageIcon(picture.getScaledInstance(profile.jLabel22.getWidth(), profile.jLabel22.getHeight(), Image.SCALE_SMOOTH)));
+                    }
+                    catch(Exception e){
+                        JOptionPane.showMessageDialog(this, "Issue with the image");
+                    }
                 }
             }
-//            MainClass.update(id);
-//            tableModel.updateRow(jTable1.getSelectedRow());
+            this.hide();
+            profile.show();
         }
-        profile.show();
+        else {
+            if(jTable1.getSelectedRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "The table is empty or select a row.");
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Select one row at a time.");
+            }
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**

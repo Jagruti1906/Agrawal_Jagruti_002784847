@@ -12,8 +12,13 @@ public class Employee {
     private String positionTitle;
     private String phoneNumber;
     private String email;
+    private String filePath;
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
     
-    Employee(String name, int employeeId, int age, String gender, Date startDate, int level, String teamInfo, String positionTitle, String phoneNumber, String email) {
+    Employee(String name, int employeeId, int age, String gender, Date startDate, int level, String teamInfo, String positionTitle, String phoneNumber, String email, String filePath) {
         this.name = name;
         this.employeeId = employeeId;
         this.age = age;
@@ -24,6 +29,7 @@ public class Employee {
         this.positionTitle = positionTitle;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.filePath = filePath;
     }
     
     public String getName() {
@@ -32,6 +38,10 @@ public class Employee {
     
     public int getEmployeeId() {
         return employeeId;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
     
     public int getAge() {
