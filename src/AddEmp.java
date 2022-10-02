@@ -266,6 +266,11 @@ public class AddEmp extends javax.swing.JFrame {
         String str=  "^\\s?((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?\\s?";
         String emailStr="\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b";
         try {
+            for(int i=0;i<MainClass.employeeList.size();i++) {
+                if(Integer.parseInt(jTextField2.getText()) == MainClass.employeeList.get(i).getEmployeeId()) {
+                    throw TypeNotPresentException("Incorrect Details");
+                }
+            }
             if (!Pattern.compile(str).matcher(jTextField7.getText()).matches()) {
                 throw TypeNotPresentException("Incorrect Details");
             }
@@ -274,10 +279,10 @@ public class AddEmp extends javax.swing.JFrame {
             }
             SearchEmp searchEmp = new SearchEmp();
             model = (DefaultTableModel) searchEmp.jTable1.getModel();
-            Employee employee = new Employee(jTextField1.getText(), Integer.parseInt(jTextField2.getText()),Integer.parseInt(jTextField4.getText()),getSelectedButtonText(genderGroup), jDateChooser1.getDate(), Integer.parseInt(jTextField3.getText()), jTextArea2.getText(), jTextField5.getText(), jTextField7.getText(), jTextField6.getText(),filePath);
             int j=0, flag=0;
             while(j<MainClass.employeeList.size()) {
                 if(Integer.parseInt(jTextField2.getText()) == MainClass.employeeList.get(j).getEmployeeId()) {
+                    Employee employee = new Employee(jTextField1.getText(), Integer.parseInt(jTextField2.getText()),Integer.parseInt(jTextField4.getText()),getSelectedButtonText(genderGroup), jDateChooser1.getDate(), Integer.parseInt(jTextField3.getText()), jTextArea2.getText(), jTextField5.getText(), jTextField7.getText(), jTextField6.getText(),SearchEmp.path);
                     MainClass.update(MainClass.employeeList.get(j).getEmployeeId(), employee);
                     JOptionPane.showMessageDialog(this, "Employee Details Updated.");
                     flag=1;
@@ -285,6 +290,7 @@ public class AddEmp extends javax.swing.JFrame {
                 j++;
             }
             if(j == MainClass.employeeList.size() & flag==0) {
+                Employee employee = new Employee(jTextField1.getText(), Integer.parseInt(jTextField2.getText()),Integer.parseInt(jTextField4.getText()),getSelectedButtonText(genderGroup), jDateChooser1.getDate(), Integer.parseInt(jTextField3.getText()), jTextArea2.getText(), jTextField5.getText(), jTextField7.getText(), jTextField6.getText(),filePath);
                 MainClass.addEmployee(employee);
                 JOptionPane.showMessageDialog(this, "New Employee Added.");
             }
